@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawly</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="theme-dark">
+    <div id="app">
+        <canvas id="canvas"></canvas>
+
+        <!-- Top Toolbar -->
+        <div class="top-bar">
+            <!-- Tools -->
+            <div class="island-container tools-island">
+                <!-- Group 1: Navigation -->
+                <button class="tool-btn" data-tool="lock" title="Lock / Read Only">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="hand" title="Hand (Pan)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+                        <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"></path>
+                        <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"></path>
+                        <path
+                            d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15">
+                        </path>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="move" title="Selection">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path>
+                    </svg>
+                </button>
+
+                <div class="separator"></div>
+
+                <!-- Group 2: Shapes -->
+                <button class="tool-btn" data-tool="rectangle" title="Rectangle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="diamond" title="Diamond">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l10 10-10 10L2 12z"></path>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="circle" title="Circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="triangle" title="Triangle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L22 20H2L12 2z"></path>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="arrow" title="Arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="line" title="Line">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="19" x2="19" y2="5"></line>
+                    </svg>
+                </button>
+
+                <!-- Group 3: Draw -->
+                <button class="tool-btn active" data-tool="pen" title="Draw (Pen)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="brush" title="Brush (Soft)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"></path>
+                        <path
+                            d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="text" title="Text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7V4h16v3"></path>
+                        <path d="M9 20h6"></path>
+                        <path d="M12 4v16"></path>
+                    </svg>
+                </button>
+                <button class="tool-btn" data-tool="eraser" title="Eraser">
+                    <!-- Block Eraser Icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13.5l-6-6-8.5 8.5 2.5 2.5h6l6-5z"></path>
+                        <path d="M16 11.5l2.5-2.5a2.121 2.121 0 0 1 3 3l-2.5 2.5"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Left Sidebar (Collapsible) -->
+        <div class="left-sidebar">
+            <!-- Menu Toggle Button -->
+            <button class="island-container icon-btn" id="menu-btn" title="Toggle Menu" style="margin-bottom: 0.5rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- Properties Panel (Collapsible) -->
+            <div class="island-container properties-island" id="properties-panel" style="display: none;">
+                <!-- Hidden by default as per request? "Clicar ele abre" -->
+
+                <div class="prop-section-title">Contorno</div>
+                <div class="color-grid">
+                    <button class="color-btn" data-color="transparent" title="Transparent"
+                        style="background: repeating-linear-gradient(45deg, #ccc 0, #ccc 2px, #fff 2px, #fff 4px);"></button>
+                    <button class="color-btn" data-color="#ffffff" style="background: #ffffff;"></button>
+                    <button class="color-btn" data-color="#ffcdd2" style="background: #ffcdd2;"></button>
+                    <button class="color-btn" data-color="#333333" style="background: #333333;"></button>
+                    <button class="color-btn" data-color="#8d6e63" style="background: #8d6e63;"></button>
+
+                    <button class="color-btn" data-color="#00bcd4" style="background: #00bcd4;"></button>
+                    <button class="color-btn" data-color="#2196f3" style="background: #2196f3;"></button>
+                    <button class="color-btn" data-color="#9c27b0" style="background: #9c27b0;"></button>
+                    <button class="color-btn" data-color="#e91e63" style="background: #e91e63;"></button>
+                    <button class="color-btn" data-color="#4caf50" style="background: #4caf50;"></button>
+
+                    <button class="color-btn" data-color="#ff9800" style="background: #ff9800;"></button>
+                    <button class="color-btn" data-color="#ff5722" style="background: #ff5722;"></button>
+                    <button class="color-btn" data-color="#f44336" style="background: #f44336;"></button>
+                </div>
+
+                <div class="separator-horiz"></div>
+
+                <div class="hex-section">
+                    <div class="prop-section-title">Código hexadecimal</div>
+                    <div class="hex-input-wrapper">
+                        <span class="hex-prefix">#</span>
+                        <input type="text" id="hex-color-input" value="ffffff" maxlength="6">
+                    </div>
+                </div>
+
+                <div class="separator-horiz"></div>
+
+                <!-- Text Settings -->
+                <div class="prop-section-title">Texto</div>
+                <div class="text-controls" style="width: 100%; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 0.8rem; opacity: 0.7;">Tamanho</span>
+                        <input type="number" id="text-size-input" value="24" min="12" max="120"
+                            style="width: 50px; background: var(--btn-hover); border: 1px solid var(--island-border); border-radius: 4px; color: var(--text-color); padding: 2px;">
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="tool-btn" id="text-bold-btn" title="Bold" style="width: 100%;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                            </svg>
+                        </button>
+                        <button class="tool-btn" id="text-underline-btn" title="Underline" style="width: 100%;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"></path>
+                                <line x1="4" y1="21" x2="20" y2="21"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="separator-horiz"></div>
+
+                <!-- Drawing Options -->
+                <div class="prop-section-title">Opções de Desenho</div>
+                <div class="toggle-controls" style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem; cursor: pointer;">
+                        <input type="checkbox" id="shape-recognition-toggle">
+                        <span>Reconhecer Formas (Caneta)</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem; cursor: pointer;">
+                        <input type="checkbox" id="line-snap-toggle">
+                        <span>Snap H/V (Linha)</span>
+                    </label>
+                </div>
+
+                <div class="separator-horiz"></div>
+
+                <!-- Stroke Width -->
+                <div class="prop-section-title">Grossura do Traço</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="range" id="stroke-width-slider" min="1" max="20" value="3" style="flex: 1;">
+                    <span id="stroke-width-value" style="font-size: 0.75rem; min-width: 24px;">3px</span>
+                </div>
+
+                <div class="separator-horiz"></div>
+
+                <div class="prop-section-title">Ações</div>
+                <div class="action-row">
+                    <button class="icon-btn" id="theme-toggle" title="Toggle Theme">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <path
+                                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="transparency-toggle" title="Background Transparency">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="3" x2="21" y2="21"></line>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="save-btn" title="Save Image">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="bottom-bar">
+            <div class="island-container zoom-island">
+                <button class="icon-btn tiny" id="zoom-out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg></button>
+                <span id="zoom-display">100%</span>
+                <button class="icon-btn tiny" id="zoom-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg></button>
+            </div>
+
+            <div class="island-container history-island">
+                <button class="icon-btn" id="undo-btn" title="Undo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10"></polyline>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="redo-btn" title="Redo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
