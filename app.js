@@ -93,14 +93,39 @@ function init() {
 
     // Shortcuts
     window.addEventListener('keydown', (e) => {
+        // Don't trigger shortcuts when typing in inputs
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
             e.preventDefault();
             undo();
         }
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x') {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
             e.preventDefault();
             redo();
         }
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+            e.preventDefault();
+            saveCanvas();
+        }
+
+        // Tool shortcuts (single keys)
+        if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+            switch (e.key.toLowerCase()) {
+                case 'p': setTool('pen'); break;
+                case 'b': setTool('brush'); break;
+                case 'r': setTool('rectangle'); break;
+                case 'c': setTool('circle'); break;
+                case 'l': setTool('line'); break;
+                case 'a': setTool('arrow'); break;
+                case 't': setTool('text'); break;
+                case 'v': setTool('move'); break;
+                case 'e': setTool('eraser'); break;
+                case 'h': setTool('hand'); break;
+                case 'd': setTool('diamond'); break;
+            }
+        }
+
         if (e.key === 'Delete' || e.key === 'Backspace') {
             if (transformState.targetIndex !== -1 && !isDrawing && !transformState.isDragging && currentTool === 'move') {
                 saveState();
